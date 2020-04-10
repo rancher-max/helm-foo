@@ -25,6 +25,13 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          env: 
+            - name: FOO
+              value: "BARRR"
+            {{- if (eq .Values.test.myBooleanValue.bool1 "true") }}
+            - name: BOOLEAN_TEST
+              value: "IT_WORKED"
+            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
